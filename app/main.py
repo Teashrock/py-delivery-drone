@@ -8,11 +8,11 @@ class BaseRobot:
         self,
         name: str,
         weight: int,
-        coords: list[int] = []
+        coords: list[int] | None = None
     ) -> None:
         self.name = name
         self.weight = weight
-        if coords == []:
+        if not coords:
             self.coords = [0, 0]
         else:
             self.coords = coords
@@ -38,10 +38,10 @@ class FlyingRobot(BaseRobot):
         self,
         name: str,
         weight: int,
-        coords: list[int] = []
+        coords: list[int] | None = None
     ) -> None:
         _coords = []
-        if coords == []:
+        if not coords:
             _coords = [0, 0, 0]
         else:
             _coords = coords
@@ -59,12 +59,12 @@ class DeliveryDrone(FlyingRobot):
         self,
         name: str,
         weight: int,
-        coords: list[int] = [],
+        coords: list[int] | None = None,
         max_load_weight: int = 0,
         current_load: int | None = None
     ) -> None:
         _coords = []
-        if coords == []:
+        if not coords:
             _coords = [0, 0, 0]
         else:
             _coords = coords
