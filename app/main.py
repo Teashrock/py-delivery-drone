@@ -13,7 +13,10 @@ class BaseRobot:
         self.name = name
         self.weight = weight
         if not coords:
-            self.coords = [0, 0, 0]
+            if self.__class__.__name__ == "BaseRobot":
+                self.coords = [0, 0]
+            else:
+                self.coords = [0, 0, 0]
         else:
             self.coords = coords
 
@@ -54,13 +57,15 @@ class DeliveryDrone(FlyingRobot):
         self,
         name: str,
         weight: int,
+        current_load: Cargo,
         coords: list[int] | None = None,
         max_load_weight: int = 0,
-        current_load: Cargo = Cargo(0)
     ) -> None:
         super().__init__(name, weight, coords)
         self.max_load_weight = max_load_weight
-        self.hook_load(current_load)
+        self.current_load = None
+        if current_load:
+            self.hook_load(current_load)
 
     def hook_load(self, cargo: Cargo) -> None:
         if self.current_load is None and cargo.weight <= self.max_load_weight:
